@@ -5,6 +5,10 @@
   --secondary: #bfcfa5;
   --accent: #3fa247;
   --error: red;
+  --edit: rgba(0, 255, 0, 0.1);
+  --edit-hover: rgba(0, 255, 0, 0.25);
+  --delete: rgba(255, 0, 0, 0.1);
+  --delete-hover: rgba(255, 0, 0, 0.25);
 
   /* Shades */
   --text-50: #f2f2f2;
@@ -30,7 +34,8 @@
   --background-800: #333333;
   --background-900: #1a1a1a;
   --background-950: #0d0d0d;
-
+  
+  --primary-5: #f8ebf93a;
   --primary-10: #f8ebf980;
   --primary-50: #f8ebf9;
   --primary-100: #f1d7f4;
@@ -75,6 +80,8 @@
   --secondary: #4a5a30;
   --accent: #5dc066;
   --error: red;
+  --edit: rgba(0, 255, 0, 0.5);
+  --delete: rgba(255, 0, 0, 0.5);
 
   /* Shades */
   --text-50: #0d0d0d;
@@ -101,6 +108,7 @@
   --background-900: #e6e6e6;
   --background-950: #f2f2f2;
 
+  --primary-5: #080308;
   --primary-10: #0b040c;
   --primary-50: #130614;
   --primary-100: #250b28;

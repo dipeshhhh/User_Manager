@@ -1,0 +1,24 @@
+.form-text-input-section {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--background-100);
+  border-radius: var(--container-radius);
+  background-color: var(--background);
+}
+
+.form-text-input-section:focus-within {
+  outline: 1px solid var(--primary);
+}
+
+.form-text-input {
+  padding: var(--form-input-padding);
+  border-radius: var(--container-radius);
+  border: none;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
+}
+
+.form-text-input:focus {
+  outline: none;
+}

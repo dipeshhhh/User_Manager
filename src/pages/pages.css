@@ -1,8 +1,10 @@
-.page-main {
+.page-body {
   width: 100%;
   min-height: 100vh;
-  /* border: 2px solid; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
+
+/* .page-main {
+  border: 2px solid;
+} */

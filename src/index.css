@@ -13,12 +13,16 @@
 
   --container-radius: 5px;
   --container-padding: 1.25rem;
+
+  --hover-transition: ease-in-out 150ms;
 }
 
 * {
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+
+  /* transition: ease-in-out 150ms; */
   /* border: 2px solid black; */
 }
 
@@ -62,6 +66,35 @@ label {
   font-size: small;
 }
 
+label,
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
 input[type="checkbox"] {
   accent-color: var(--primary);
+}
+
+.error-message {
+  font-size: small;
+  align-self: center;
+  width: 100%;
+  color: var(--error);
+}
+
+.interactive-icon{
+  cursor: pointer;
+}
+
+.button {
+  --button-padding: 0.75em 1em;
+  padding: var(--button-padding);
+  border: none;
+  border-radius: var(--container-radius);
+  cursor: pointer;
+}
+
+.button.primary {
+  background-color: var(--primary);
+  color: var(--background);
 }

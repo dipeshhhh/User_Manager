@@ -7,6 +7,9 @@ import "../pages.css";
 
 import Visibility from "../../assets/visibility.svg";
 import VisibilityOff from "../../assets/visibility_off.svg";
+import { validateEmail } from "../../utils/helpers";
+import FormTextInput from "../../components/FormInputs/FormTextInput/FormTextInput";
+import FormCheckboxInput from "../../components/FormInputs/FormCheckboxInput/FormCheckboxInput";
 
 export default function Login() {
   const [inputCredentials, setInputCredentials] = useState({
@@ -15,7 +18,7 @@ export default function Login() {
     "rememberMe": false
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
@@ -26,24 +29,23 @@ export default function Login() {
 
   // ========== Input Validation ==========
   const validateInputs = () => {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!inputCredentials.email && !inputCredentials.password) {
-      setErrorMsg("Missing email and Password");
+      setErrorMessage("Missing email and Password");
       return false;
     }
     if (!inputCredentials.email) {
-      setErrorMsg("Missing email");
+      setErrorMessage("Missing email");
       return false;
-    } else if (!emailRegex.test(inputCredentials.email)) {
-      setErrorMsg("Invalid email");
+    } else if (!validateEmail(inputCredentials.email)) {
+      setErrorMessage("Invalid email");
       return false;
     }
     if (!inputCredentials.password) {
-      setErrorMsg("Missing Password");
+      setErrorMessage("Missing Password");
       return false;
     }
 
-    setErrorMsg('');
+    setErrorMessage('');
     return true;
   }
 
@@ -79,67 +81,52 @@ export default function Login() {
     } catch (error) {
       console.error(error.response.data.error);
       // show toast instead
-      setErrorMsg(error.response.data.error);
+      setErrorMessage(error.response.data.error);
     } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <main className="page-main login-page">
+    <div className="page-body login-page">
       <h4>Log In</h4>
-      <form className="login-form">
-        <div className="form-input-container">
-          <label htmlFor="login-input-email">Email</label>
-          <span className="form-input-section">
-            <input
-              id="login-input-email"
-              className="form-input"
-              type="email"
-              placeholder="Email"
-              value={inputCredentials.email}
-              onChange={handleEmailInput}
-              required
-            />
-          </span>
-        </div>
-        <div className="form-input-container">
-          <label htmlFor="login-input-password">Password</label>
-          <span className="form-input-section">
-            <input
-              id="login-input-password"
-              className="form-input"
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              value={inputCredentials.password}
-              onChange={handlePasswordInput}
-              required
-            />
-            <img
-              className="interactive-icon input-icon-right"
-              src={showPassword ? Visibility : VisibilityOff}
-              onClick={toggleShowPassword}
-            />
-          </span>
-        </div>
-        {errorMsg && // Will use toast later, this will do for now
-          <span className="error-message">Error: {errorMsg}</span>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <FormTextInput
+          autoFocus
+          id="login-input-email"
+          inputName="Email"
+          inputType="email"
+          inputValue={inputCredentials.email}
+          handleInput={handleEmailInput}
+          required={true}
+        />
+        <FormTextInput
+          id="login-input-password"
+          inputName="Password"
+          inputType={showPassword ? "text" : "password"}
+          inputValue={inputCredentials.password}
+          handleInput={handlePasswordInput}
+          required={true}
+        >
+          <img
+            className="interactive-icon password-visibility-icon"
+            src={showPassword ? Visibility : VisibilityOff}
+            onClick={toggleShowPassword}
+          />
+        </FormTextInput>
+        {errorMessage && // Will use toast later, this will do for now
+          <span className="error-message">Error: {errorMessage}</span>
         }
         <div className="form-input-container">
-          <span className="form-checkbox-container">
-            <input
-              id="input-stay-logged-in"
-              type="checkbox"
-              className="form-checkbox"
-              checked={inputCredentials.rememberMe}
-              onChange={handleRememberMeInput}
-            />
-            <label htmlFor="input-stay-logged-in">Stay logged in?</label>
-          </span>
+          <FormCheckboxInput
+            id="input-stay-logged-in"
+            checked={inputCredentials.rememberMe}
+            onChange={handleRememberMeInput}
+            inputName="Stay logged in?"
+          />
           <button
-            className="button"
+            className="button primary"
             type="submit"
-            onClick={handleSubmit}
           >
             {isLoading ?
               "Loading..."
@@ -149,6 +136,6 @@ export default function Login() {
           </button>
         </div>
       </form>
-    </main>
+    </div>
   )
 }
