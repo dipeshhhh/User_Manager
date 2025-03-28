@@ -5,12 +5,14 @@ import "./UserListItem.css";
 import FallbackAvatar from "../../assets/account_circle.svg"
 import ConfirmationDialog from "../Dialogs/ConfirmationDialog/ConfirmationDialog";
 import EditUserDialog from "../Dialogs/EditUserDialog/EditUserDialog";
+import { useUserListContext } from "../../contexts/UserListContext";
 
 export default function UserListItem({ id, first_name, last_name, email, avatar }) {
   const [isLoading, setIsLoading] = useState(false);
   const confirmationDialogRef = useRef(null);
   const editUserDialogRef = useRef(null);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const { deleteUser } = useUserListContext();
 
   const openEditDialog = () => {
     editUserDialogRef.current?.showModal();
@@ -24,7 +26,8 @@ export default function UserListItem({ id, first_name, last_name, email, avatar 
     setIsLoading(true);
     try {
       const response = await axios.delete(`${BASE_URL}/users/${id}`);
-      if (response.status >= 200 && response.status <= 299) console.log("success");
+      if (response.status < 200 || response.status > 299) throw new Error("deletion failed");
+      deleteUser(id);
       confirmationDialogRef.current.close();
     } catch (error) {
       console.log(error)

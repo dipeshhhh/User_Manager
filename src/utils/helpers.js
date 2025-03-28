@@ -37,3 +37,10 @@ export function capitalizeFirstLetter(str) {
   if (!str) return str; // Handle empty string
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function isShallowCopy(obj1, obj2) {
+  for(let key in obj1) {
+    if(obj1[key] !== obj2[key]) return false;
+  }
+  return true;
+}

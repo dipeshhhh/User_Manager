@@ -5,13 +5,12 @@ import SearchBar from "../../components/Searchbar/Searchbar.jsx";
 import UserListItem from "../../components/UserListItem/UserListItem.jsx";
 import PaginationBar from "../../components/PaginationBar/PaginationBar.jsx";
 import axios from "axios";
+import { useUserListContext } from "../../contexts/UserListContext.jsx";
 
 export default function UsersList() {
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  // Maybe handle this in a context
-  const [users, setUsers] = useState([]);
-  const allUsers = useRef([]);
+  const { userList, setUserList, originalUserListRef } = useUserListContext();
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -20,8 +19,8 @@ export default function UsersList() {
       setIsLoading(true);
       try {
         const response = await axios.get(`${BASE_URL}/users?page=${pageNumber}`);
-        allUsers.current = response.data.data;
-        setUsers(response.data.data);
+        originalUserListRef.current = response.data.data;
+        setUserList(response.data.data);
         setTotalPages(response.data.total_pages);
       } catch (errors) {
         // handle errors
@@ -32,10 +31,6 @@ export default function UsersList() {
     }
     getUsers(pageNumber);
   }, [pageNumber])
-
-  function searchClient(query) {
-    // TODO: implement client side search.
-  }
 
   return (
     <div className="page-body user-list-page">
@@ -51,14 +46,14 @@ export default function UsersList() {
           "Loading..."
           :
           <ul className="users-list">
-            {users.map((user) => (
+            {userList.map((user) => (
               <UserListItem
-                key={user.id}
-                id={user.id}
-                first_name={user.first_name}
-                last_name={user.last_name}
-                email={user.email}
-                avatar={user.avatar}
+                key={user?.id}
+                id={user?.id}
+                first_name={user?.first_name}
+                last_name={user?.last_name}
+                email={user?.email}
+                avatar={user?.avatar}
               />
             ))}
           </ul>

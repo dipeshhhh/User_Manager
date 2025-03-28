@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import "./EditUserDialog.css";
 import "../Dialog.css";
-import { capitalizeFirstLetter, validateEmail, validateName } from "../../../utils/helpers";
+import { capitalizeFirstLetter, isShallowCopy, validateEmail, validateName } from "../../../utils/helpers";
 
 import FallBackAvatar from "../../../assets/account_circle.svg";
 import FormTextInput from "../../FormInputs/FormTextInput/FormTextInput";
 import axios from "axios";
+import { useUserListContext } from "../../../contexts/UserListContext";
 
 export default function EditUserDialog({
   referrer,
@@ -21,6 +22,8 @@ export default function EditUserDialog({
   const formRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  const { updateUser } = useUserListContext();
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -70,7 +73,7 @@ export default function EditUserDialog({
   const onConfirm = async (e) => {
     e.preventDefault();
     if (!validateData()) return;
-    // check if shallow copy is same
+    if (isShallowCopy(userInputs, originalDataRef.current)) return; // If nothing is changed
     setIsLoading(true);
     try {
       const response = await axios.put(
@@ -78,7 +81,7 @@ export default function EditUserDialog({
         userInputs,
         { headers: { "Content-Type": "application/json" } }
       )
-      console.log(response.data);
+      updateUser(id, response.data);
       referrer.current?.close();
     } catch (error) {
       console.error(error);
