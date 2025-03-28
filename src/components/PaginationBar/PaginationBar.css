@@ -1,0 +1,30 @@
+.pagination-bar-container {
+  width: 100%;
+  /* border: 2px solid; */
+  border-radius: var(--container-radius);
+  /* padding: calc(var(--container-padding) / 2) var(--container-padding); */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pagination-bar-container > * {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1ch;
+}
+
+.pagination-button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  color: var(--primary)
+}
+
+.pagination-page-input {
+  max-width: 8ch;
+}

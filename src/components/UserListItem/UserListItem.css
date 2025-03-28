@@ -1,0 +1,80 @@
+:root {
+  --user-list-item-image-height: 128px;
+}
+
+.user-list-item {
+  display: flex;
+  flex-direction: row;
+  /* gap: 1ch; */
+  border-radius: var(--container-radius);
+  overflow: hidden;
+  width: 100%;
+  align-items: center;
+  /* border: 1px solid var(--background-50); */
+  background-color: var(--primary-5);
+}
+
+.user-list-item-image {
+  background-color: var(--background-50);
+  height: var(--user-list-item-image-height);
+  width: var(--user-list-item-image-height);
+}
+
+.user-list-item-right {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: var(--user-list-item-image-height);
+}
+
+.user-list-item-detail-section {
+  flex-grow: 1;
+  padding: 1ch;
+  word-break: break-word;
+}
+
+.user-list-item-button-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.user-list-item-button-section button {
+  border: none;
+  padding: 1ch;
+  cursor: pointer;
+  transition: var(--hover-transition);
+}
+
+.user-list-item-edit-button {
+  background-color: var(--edit);
+}
+.user-list-item-edit-button:hover,
+.user-list-item-edit-button:focus {
+  background-color: var(--edit-hover);
+}
+
+.user-list-item-delete-button {
+  background-color: var(--delete);
+}
+.user-list-item-delete-button:hover,
+.user-list-item-delete-button:focus {
+  background-color: var(--delete-hover);
+}
+
+@media only screen and (max-width: 380px) {
+  :root {
+    --user-list-item-image-height: 100px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .user-list-item-right {
+    font-size: small;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .user-list-item {
+    width: calc(50% - var(--container-padding));
+  }
+}
