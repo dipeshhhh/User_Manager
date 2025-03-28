@@ -4,6 +4,7 @@
   --primary: #68206f;
   --secondary: #bfcfa5;
   --accent: #3fa247;
+  --error: red;
 
   /* Shades */
   --text-50: #f2f2f2;
@@ -30,6 +31,7 @@
   --background-900: #1a1a1a;
   --background-950: #0d0d0d;
 
+  --primary-10: #f8ebf980;
   --primary-50: #f8ebf9;
   --primary-100: #f1d7f4;
   --primary-200: #e3b0e8;
@@ -72,6 +74,7 @@
   --primary: #d890df;
   --secondary: #4a5a30;
   --accent: #5dc066;
+  --error: red;
 
   /* Shades */
   --text-50: #0d0d0d;
@@ -98,6 +101,7 @@
   --background-900: #e6e6e6;
   --background-950: #f2f2f2;
 
+  --primary-10: #0b040c;
   --primary-50: #130614;
   --primary-100: #250b28;
   --primary-200: #4a174f;

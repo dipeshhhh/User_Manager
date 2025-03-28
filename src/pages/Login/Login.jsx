@@ -3,6 +3,10 @@ import { useState } from "react"
 import { useNavigate } from "react-router";
 import { saveToken } from "../../utils/auth";
 import "./Login.css";
+import "../pages.css";
+
+import Visibility from "../../assets/visibility.svg";
+import VisibilityOff from "../../assets/visibility_off.svg";
 
 export default function Login() {
   const [inputCredentials, setInputCredentials] = useState({
@@ -68,50 +72,78 @@ export default function Login() {
         { "email": inputCredentials.email, "password": inputCredentials.password },
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log(response);
+
       saveToken(response.data.token, inputCredentials.rememberMe);
       // Show toast
       navigate("/");
     } catch (error) {
       console.error(error.response.data.error);
       // show toast instead
-      setErrorMsg(`Error: ${error.response.data.error}`);
+      setErrorMsg(error.response.data.error);
     } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <>
-      <form>
-        <input
-          type="email"
-          placeholder="Email"
-          value={inputCredentials.email}
-          onChange={handleEmailInput}
-          required
-        />
-        <input
-          type="checkbox"
-          value={showPassword}
-          onChange={toggleShowPassword}
-        />
-        <input
-          type={showPassword ? "text" : "password"}
-          placeholder="Password"
-          value={inputCredentials.password}
-          onChange={handlePasswordInput}
-          required
-        />
-
-        <input
-          type="checkbox"
-          checked={inputCredentials.rememberMe}
-          onChange={handleRememberMeInput}
-        />
-        <span>{errorMsg}</span>
-        <button type="submit" onClick={handleSubmit}>{isLoading ? "Loading..." : "Sign In"}</button>
+    <main className="page-main login-page">
+      <h4>Log In</h4>
+      <form className="login-form">
+        <div className="form-input-container">
+          <label htmlFor="login-input-email">Email</label>
+          <span className="form-input-section">
+            <input
+              id="login-input-email"
+              className="form-input"
+              type="email"
+              placeholder="Email"
+              value={inputCredentials.email}
+              onChange={handleEmailInput}
+              required
+            />
+          </span>
+        </div>
+        <div className="form-input-container">
+          <label htmlFor="login-input-password">Password</label>
+          <span className="form-input-section">
+            <input
+              id="login-input-password"
+              className="form-input"
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={inputCredentials.password}
+              onChange={handlePasswordInput}
+              required
+            />
+            <img
+              className="interactive-icon input-icon-right"
+              src={showPassword ? Visibility : VisibilityOff}
+              onClick={toggleShowPassword}
+            />
+          </span>
+        </div>
+        {errorMsg && // Will use toast later, this will do for now
+          <span className="error-message">Error: {errorMsg}</span>
+        }
+        <div className="form-input-container">
+          <span className="form-checkbox">
+            <input
+              id="input-stay-logged-in"
+              type="checkbox"
+              checked={inputCredentials.rememberMe}
+              onChange={handleRememberMeInput}
+            />
+            <label htmlFor="input-stay-logged-in">Stay logged in?</label>
+          </span>
+          <button
+            className="button"
+            type="submit" ś
+            onClick={handleSubmit}
+          >
+            {isLoading ? "Loading..." : "Sign In"}
+          </button>
+        </div>
       </form>
-    </>
+    </main>
   )
 }

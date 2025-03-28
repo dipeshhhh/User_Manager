@@ -1,0 +1,108 @@
+:root {
+  --form-input-padding-vertical: 0.75em;
+  --form-input-padding-horizontal: 1em; 
+  --form-input-padding: var(--form-input-padding-vertical) var(--form-input-padding-horizontal);
+}
+
+.login-page {
+  align-items: center;
+  justify-content: center;
+  gap: 2ch;
+}
+
+.login-form {
+  background: var(--primary-10);
+  padding: var(--container-padding);
+  border: 1px solid var(--background-100);
+  border-radius: var(--container-radius);
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2ch;
+}
+
+.login-form label {
+  cursor: pointer;
+  color: var(--text);
+}
+
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.25ch;
+}
+
+.form-input-section {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid var(--background-100);
+  border-radius: var(--container-radius);
+  background-color: var(--background);
+}
+
+.form-input-section:focus-within {
+  outline: 1px solid var(--primary);
+}
+
+.form-input {
+  padding: var(--form-input-padding);
+  border-radius: var(--container-radius);
+  border: none;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
+}
+
+.form-input:focus {
+  outline: none;
+}
+
+.input-icon-right {
+  padding: 0px var(--form-input-padding-horizontal);
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.form-checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5ch;
+}
+
+.form-checkbox *{
+  /* Maybe cursorPointer on label and input[type="checkbox"] later? */
+  cursor: pointer
+}
+
+/* Extract these later */
+.error-message {
+  font-size:small;
+  align-self: center;
+  width: 100%;
+  color: var(--error);
+  /* text-align: center; */
+}
+
+.interactive-icon{
+  cursor: pointer;
+}
+
+.button {
+  --button-padding: 0.75em 1em;
+  padding: var(--button-padding);
+  border: none;
+  border-radius: var(--container-radius);
+  background-color: var(--primary);
+  color: var(--background);
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 320px) {
+  .login-form {
+    width: 90%;
+  }
+}
