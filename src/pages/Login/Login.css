@@ -66,11 +66,12 @@
   flex-grow: 1;
 }
 
-.form-checkbox {
+.form-checkbox-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 0.5ch;
+  padding-bottom: 0.15ch;
 }
 
 .form-checkbox *{

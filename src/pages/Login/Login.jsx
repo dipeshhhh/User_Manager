@@ -126,10 +126,11 @@ export default function Login() {
           <span className="error-message">Error: {errorMsg}</span>
         }
         <div className="form-input-container">
-          <span className="form-checkbox">
+          <span className="form-checkbox-container">
             <input
               id="input-stay-logged-in"
               type="checkbox"
+              className="form-checkbox"
               checked={inputCredentials.rememberMe}
               onChange={handleRememberMeInput}
             />
@@ -137,10 +138,14 @@ export default function Login() {
           </span>
           <button
             className="button"
-            type="submit" ś
+            type="submit"
             onClick={handleSubmit}
           >
-            {isLoading ? "Loading..." : "Sign In"}
+            {isLoading ?
+              "Loading..."
+              :
+              "Log In"
+            }
           </button>
         </div>
       </form>
