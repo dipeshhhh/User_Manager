@@ -1,14 +1,21 @@
 import "./PaginationBar.css";
 
 export default function PaginationBar({ pageNumber, setPageNumber, totalPages = 1 }) {
-  const handleNextPage = (e) => { }
-  const handlePrevPage = (e) => { }
+  const handleNextPage = (e) => {
+    if(pageNumber >= totalPages) return;
+    setPageNumber(pageNumber+1);
+  }
+  const handlePrevPage = (e) => {
+    if(pageNumber <= 1) return;
+    setPageNumber(pageNumber-1);
+  }
   const handlePageInput = (e) => {
     setPageNumber(pageNumberValidation(e.target.value, totalPages));
   }
   const pageNumberValidation = (pageNumber, totalPages = pageNumber) => {
     if (pageNumber < 1) return 1;
     if (pageNumber > totalPages) return totalPages;
+    return pageNumber;
   }
   return (
     <div className="pagination-bar-container">

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import "./EditUserDialog.css";
 import "../Dialog.css";
-import { capitalizeFirstLetter, generateUniqueId, validateEmail, validateName } from "../../../utils/helpers";
+import { capitalizeFirstLetter, validateEmail, validateName } from "../../../utils/helpers";
 
-import EditIcon from "../../../assets/edit.svg";
 import FallBackAvatar from "../../../assets/account_circle.svg";
 import FormTextInput from "../../FormInputs/FormTextInput/FormTextInput";
+import axios from "axios";
 
 export default function EditUserDialog({
   referrer,
@@ -19,6 +19,8 @@ export default function EditUserDialog({
   const [userInputs, setUserInputs] = useState({ id, first_name, last_name, email, avatar });
   const [errorMessage, setErrorMessage] = useState("");
   const formRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -65,13 +67,24 @@ export default function EditUserDialog({
     return true;
   }
 
-  const onConfirm = (e) => {
+  const onConfirm = async (e) => {
     e.preventDefault();
-    if (!validateData()) {
-      // referrer.current.close();
-      return;
+    if (!validateData()) return;
+    // check if shallow copy is same
+    setIsLoading(true);
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/users/{id}`,
+        userInputs,
+        { headers: { "Content-Type": "application/json" } }
+      )
+      console.log(response.data);
+      referrer.current?.close();
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
-    console.log(userInputs)
   }
   const onClose = () => {
     resetChanges();
@@ -85,7 +98,7 @@ export default function EditUserDialog({
 
   return (
     <dialog className="dialog edit-user-dialog" ref={referrer}>
-      <form method="dialog" ref={formRef} onSubmit={onConfirm}>
+      <form ref={formRef} onSubmit={onConfirm}>
         <div className="dialog-text">
           <h5 className="dialog-title">Edit User</h5>
           <section className="user-edit-form">
@@ -122,7 +135,7 @@ export default function EditUserDialog({
         </div>
         <div className="dialog-buttons">
           <button className="dialog-button cancel-button" onClick={onClose}>Cancel</button>
-          <button type="submit" className="dialog-button confirm-button">Edit</button>
+          <button type="submit" className="dialog-button confirm-button">{isLoading ? "Loading..." : "Edit"}</button>
         </div>
       </form>
     </dialog>

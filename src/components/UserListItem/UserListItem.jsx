@@ -1,4 +1,5 @@
-import { useRef, useEffect } from "react";
+import { useRef, useState } from "react";
+import axios from "axios";
 import "./UserListItem.css";
 
 import FallbackAvatar from "../../assets/account_circle.svg"
@@ -6,14 +7,33 @@ import ConfirmationDialog from "../Dialogs/ConfirmationDialog/ConfirmationDialog
 import EditUserDialog from "../Dialogs/EditUserDialog/EditUserDialog";
 
 export default function UserListItem({ id, first_name, last_name, email, avatar }) {
+  const [isLoading, setIsLoading] = useState(false);
   const confirmationDialogRef = useRef(null);
   const editUserDialogRef = useRef(null);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
   const openEditDialog = () => {
     editUserDialogRef.current?.showModal();
   }
   const openDeleteDialog = () => {
     confirmationDialogRef.current?.showModal();
   }
+
+  const confirmDelete = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      const response = await axios.delete(`${BASE_URL}/users/${id}`);
+      if (response.status >= 200 && response.status <= 299) console.log("success");
+      confirmationDialogRef.current.close();
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false);
+      confirmationDialogRef.current?.close();
+    }
+  }
+
   return (
     <li className="user-list-item">
       <img
@@ -36,7 +56,8 @@ export default function UserListItem({ id, first_name, last_name, email, avatar 
         referrer={confirmationDialogRef}
         title="Confirm to delete user"
         message=<>{`Name: ${first_name} ${last_name}`}<br />{`Email: ${email}`}</>
-        confirmButtonText="Delete"
+        confirmButtonText={isLoading ? "Loading..." : "Delete"}
+        onConfirm={confirmDelete}
       />
       <EditUserDialog
         referrer={editUserDialogRef}

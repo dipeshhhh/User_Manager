@@ -1,13 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./UsersList.css"
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import SearchBar from "../../components/Searchbar/Searchbar.jsx";
 import UserListItem from "../../components/UserListItem/UserListItem.jsx";
 import PaginationBar from "../../components/PaginationBar/PaginationBar.jsx";
+import axios from "axios";
 
 export default function UsersList() {
   const [pageNumber, setPageNumber] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  // Maybe handle this in a context
+  const [users, setUsers] = useState([]);
+  const allUsers = useRef([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  useEffect(() => {
+    async function getUsers(pageNumber = 1) {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(`${BASE_URL}/users?page=${pageNumber}`);
+        allUsers.current = response.data.data;
+        setUsers(response.data.data);
+        setTotalPages(response.data.total_pages);
+      } catch (errors) {
+        // handle errors
+        console.error(errors);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getUsers(pageNumber);
+  }, [pageNumber])
+
+  function searchClient(query) {
+    // TODO: implement client side search.
+  }
 
   return (
     <div className="page-body user-list-page">
@@ -19,18 +47,22 @@ export default function UsersList() {
           setPageNumber={setPageNumber}
           totalPages={totalPages}
         />
-        <ul className="users-list">
-          {data.data.map((user) => (
-            <UserListItem
-              key={user.id}
-              id={user.id}
-              first_name={user.first_name}
-              last_name={user.last_name}
-              email={user.email}
-              avatar={user.avatar}
-            />
-          ))}
-        </ul>
+        {isLoading ?
+          "Loading..."
+          :
+          <ul className="users-list">
+            {users.map((user) => (
+              <UserListItem
+                key={user.id}
+                id={user.id}
+                first_name={user.first_name}
+                last_name={user.last_name}
+                email={user.email}
+                avatar={user.avatar}
+              />
+            ))}
+          </ul>
+        }
         <PaginationBar
           pageNumber={pageNumber}
           setPageNumber={setPageNumber}
@@ -41,7 +73,7 @@ export default function UsersList() {
   )
 }
 
-const data = {
+const exampleData = {
   "page": 1,
   "per_page": 6,
   "total": 12,
