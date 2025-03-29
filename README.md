@@ -23,7 +23,7 @@ npm install
 yarn install
 ```
 
-3. Create a new `.env` file in the root directory. (Use `.env.example` as a reference.)
+3. Create a new `.env` file in the root directory (use `.env.example` as a reference).
 
 4. Start the development server:
 ```bash
@@ -31,6 +31,13 @@ npm run dev
 # or
 yarn dev
 ```
+
+### Test Credentials
+- Email: `eve.holt@reqres.in`
+- Password: `cityslicka` (anything works as the password)
+
+## Deployment
+Live Demo deployed on [Netlify](https://67e7774604f4b200087ec35b--user-manager-frontend.netlify.app/).
 
 ## Additional Features (Bonus Implementations)
 - Client-side search and filtering.
