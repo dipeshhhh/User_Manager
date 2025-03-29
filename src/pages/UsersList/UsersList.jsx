@@ -6,7 +6,7 @@ import { useUserListContext } from "../../contexts/UserListContext.jsx";
 import "./UsersList.css"
 
 import NavBar from "../../components/NavBar/NavBar.jsx";
-import SearchBar from "../../components/Searchbar/Searchbar.jsx";
+import SearchBar from "../../components/SearchBar/SearchBar.jsx";
 import UserListItem from "../../components/UserListItem/UserListItem.jsx";
 import PaginationBar from "../../components/PaginationBar/PaginationBar.jsx";
 
