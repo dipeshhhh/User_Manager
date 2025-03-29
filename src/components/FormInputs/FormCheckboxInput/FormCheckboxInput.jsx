@@ -1,8 +1,9 @@
+import { generateUniqueId } from "../../../utils/helpers";
 import "../FormInputs.css";
 import "./FormCheckboxInput.css";
 
 export default function FormCheckboxInput({
-  id,
+  id=generateUniqueId(),
   checked,
   onChange,
   inputName

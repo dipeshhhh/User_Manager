@@ -23,7 +23,7 @@ export function UserListProvider({ children }) {
     )))
   }
 
-  const searchUsers = (query, fields = ["first_name", "last_name", "email", "full_name"]) => {
+  const searchUsers = (query, fields = ["first_name", "last_name", "email"]) => {
     if (!query) {
       originalUserListRef.current && setUserList(originalUserListRef.current)
       return;
@@ -31,7 +31,7 @@ export function UserListProvider({ children }) {
     setUserList(
       originalUserListRef.current.filter(user =>
         fields.some(field => {
-          if (field === "full_name") {
+          if ((fields.includes("first_name") && fields.includes("last_name"))) {
             return `${user.first_name} ${user.last_name}`.toLowerCase().includes(query.toLowerCase());
           }
           return user[field]?.toLowerCase().includes(query.toLowerCase())

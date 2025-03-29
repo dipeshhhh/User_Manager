@@ -2,26 +2,47 @@ import { useState, useEffect, useCallback } from "react";
 import "./Searchbar.css";
 import SearchIcon from "../../assets/search.svg";
 import { useUserListContext } from "../../contexts/UserListContext";
-import { debounce } from "../../utils/helpers";
+import { capitalizeFirstLetter, debounce } from "../../utils/helpers";
+import FormCheckboxInput from "../FormInputs/FormCheckboxInput/FormCheckboxInput";
 
 export default function SearchBar() {
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
   const { searchUsers } = useUserListContext();
+  const [filters, setFilters] = useState({
+    first_name: true,
+    last_name: true,
+    email: false,
+  });
 
-  const debouncedSearch = useCallback(debounce(searchUsers, 300), []);
+  // Debounced function now considers both searchInput and filters
+  const debouncedSearch = useCallback(
+    debounce((query, activeFilters) => searchUsers(query, Object.keys(activeFilters).filter((key) => activeFilters[key])), 300),
+    []
+  );
 
   useEffect(() => {
-    debouncedSearch(searchInput);
-  }, [searchInput, debouncedSearch]);
-  
+    debouncedSearch(searchInput, filters);
+  }, [searchInput, filters, debouncedSearch]);
+
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
-  }
-  
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    searchUsers(searchInput, Object.keys(filters).filter((key) => filters[key]));
+  };
+
+  const toggleFilter = (key) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [key]: !prevFilters[key],
+    }));
+  };
 
   return (
     <div className="search-bar-container">
-      <form className="search-bar" onSubmit={(e) => { e.preventDefault }}>
+      <form className="search-bar" onSubmit={handleSearch}>
         <input
           className="search-bar-input"
           type="text"
@@ -29,8 +50,18 @@ export default function SearchBar() {
           value={searchInput}
           onChange={handleSearchInput}
         />
-        <img className="search-bar-icon" src={SearchIcon} />
+        <img className="search-bar-icon" src={SearchIcon} onClick={handleSearch} />
       </form>
+      <section className="filter-section">
+        {Object.keys(filters).map((key) => (
+          <FormCheckboxInput
+            key={key}
+            inputName={capitalizeFirstLetter(key.replace("_", " "))}
+            checked={filters[key]}
+            onChange={() => toggleFilter(key)}
+          />
+        ))}
+      </section>
     </div>
-  )
+  );
 }

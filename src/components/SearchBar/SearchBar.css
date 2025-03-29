@@ -39,3 +39,10 @@
 .search-bar-icon:hover {
   opacity: 100%;
 }
+
+.filter-section {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5ch;
+  padding: 1ch 0px;
+}
