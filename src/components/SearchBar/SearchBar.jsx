@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useUserListContext } from "../../contexts/UserListContext";
 import { capitalizeFirstLetter, debounce } from "../../utils/helpers";
-import "./Searchbar.css";
+import "./SearchBar.css";
 import FormCheckboxInput from "../FormInputs/FormCheckboxInput/FormCheckboxInput";
 import SearchIcon from "../../assets/search.svg";
 
