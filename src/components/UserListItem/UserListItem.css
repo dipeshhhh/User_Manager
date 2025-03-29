@@ -11,13 +11,14 @@
   width: 100%;
   align-items: center;
   /* border: 1px solid var(--background-50); */
-  background-color: var(--primary-5);
+  background-color: var(--primary-10);
 }
 
 .user-list-item-image {
   background-color: var(--background-50);
   height: var(--user-list-item-image-height);
   width: var(--user-list-item-image-height);
+  object-fit: cover;
 }
 
 .user-list-item-right {
@@ -31,6 +32,7 @@
   flex-grow: 1;
   padding: 1ch;
   word-break: break-word;
+  font-size: 0.9rem;
 }
 
 .user-list-item-button-section {
@@ -43,6 +45,16 @@
   padding: 1ch;
   cursor: pointer;
   transition: var(--hover-transition);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5ch;
+}
+
+.user-list-item-button-section button img {
+  height: 1em;
 }
 
 .user-list-item-edit-button {

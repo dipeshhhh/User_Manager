@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <section className="navbar-section navbar-section-left" onClick={handleFavIconClick}>
-        <img ref={avatarIconRef} src={FavIcon} className="navbar-icon" onClick={handleFavIconClick} />
+        {/* <img ref={avatarIconRef} src={FavIcon} className="navbar-icon" onClick={handleFavIconClick} /> */}
         <h5 className="navbar-title" onClick={handleFavIconClick}>User Manager</h5>
       </section>
       <section className="navbar-section navbar-section-right">

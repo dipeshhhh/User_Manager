@@ -1,12 +1,15 @@
 import { useRef, useState } from "react";
 import axios from "axios";
 import "./UserListItem.css";
-
-import FallbackAvatar from "../../assets/account_circle.svg"
-import ConfirmationDialog from "../Dialogs/ConfirmationDialog/ConfirmationDialog";
-import EditUserDialog from "../Dialogs/EditUserDialog/EditUserDialog";
 import { useUserListContext } from "../../contexts/UserListContext";
 import { toast } from "react-toastify";
+
+import ConfirmationDialog from "../Dialogs/ConfirmationDialog/ConfirmationDialog";
+import EditUserDialog from "../Dialogs/EditUserDialog/EditUserDialog";
+
+import FallbackAvatar from "../../assets/account_circle.svg";
+import EditIcon from "../../assets/edit.svg";
+import DeleteIcon from "../../assets/delete.svg";
 
 export default function UserListItem({ id, first_name, last_name, email, avatar }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -53,8 +56,14 @@ export default function UserListItem({ id, first_name, last_name, email, avatar 
           <div>{email}</div>
         </section>
         <section className="user-list-item-button-section">
-          <button className="user-list-item-edit-button" onClick={openEditDialog}>Edit</button>
-          <button className="user-list-item-delete-button" onClick={openDeleteDialog}>Delete</button>
+          <button className="user-list-item-edit-button" onClick={openEditDialog}>
+            <img src={EditIcon} />
+            Edit
+          </button>
+          <button className="user-list-item-delete-button" onClick={openDeleteDialog}>
+            <img src={DeleteIcon} />
+            Delete
+          </button>
         </section>
       </div>
       <ConfirmationDialog

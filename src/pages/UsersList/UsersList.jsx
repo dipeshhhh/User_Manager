@@ -51,11 +51,11 @@ export default function UsersList() {
       <NavBar />
       <main className="page-main user-list-page-main">
         <SearchBar />
-        <PaginationBar
+        {/* <PaginationBar
           pageNumber={pageNumber}
           setPageNumber={setPageNumber}
           totalPages={totalPages}
-        />
+        /> */}
         {isLoading ?
           "Loading..."
           :
