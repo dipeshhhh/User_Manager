@@ -7,6 +7,7 @@ import FallBackAvatar from "../../../assets/account_circle.svg";
 import FormTextInput from "../../FormInputs/FormTextInput/FormTextInput";
 import axios from "axios";
 import { useUserListContext } from "../../../contexts/UserListContext";
+import { toast } from "react-toastify";
 
 export default function EditUserDialog({
   referrer,
@@ -18,7 +19,6 @@ export default function EditUserDialog({
 }) {
   const originalDataRef = useRef({ id, first_name, last_name, email, avatar });
   const [userInputs, setUserInputs] = useState({ id, first_name, last_name, email, avatar });
-  const [errorMessage, setErrorMessage] = useState("");
   const formRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -51,29 +51,33 @@ export default function EditUserDialog({
 
   const validateData = () => {
     if (!userInputs.first_name || !userInputs.last_name || !userInputs.email) {
-      setErrorMessage("missing inputs");
+      toast.error("Error: missing inputs");
       return false;
     }
     if (!validateName(userInputs.first_name)) {
-      setErrorMessage("invalid first name");
+      toast.error("Error: invalid first name");
       return false;
     }
     if (!validateName(userInputs.last_name)) {
-      setErrorMessage("invalid last name");
+      toast.error("Error: invalid last name");
       return false;
     }
     if (!validateEmail(userInputs.email)) {
-      setErrorMessage("invalid email");
+      toast.error("Error: invalid email");
       return false;
     }
-    setErrorMessage("");
     return true;
   }
 
   const onConfirm = async (e) => {
     e.preventDefault();
     if (!validateData()) return;
-    if (isShallowCopy(userInputs, originalDataRef.current)) return; // If nothing is changed
+    if (isShallowCopy(userInputs, originalDataRef.current)) {
+      // If nothing is changed
+      toast.warn("No changes made");
+      referrer.current?.close();
+      return;
+    }
     setIsLoading(true);
     try {
       const response = await axios.put(
@@ -82,9 +86,10 @@ export default function EditUserDialog({
         { headers: { "Content-Type": "application/json" } }
       )
       updateUser(id, response.data);
+      toast.success("User edited successfully")
       referrer.current?.close();
     } catch (error) {
-      console.error(error);
+      toast.error(`Error: ${error}`);
     } finally {
       setIsLoading(false);
     }
@@ -96,7 +101,6 @@ export default function EditUserDialog({
 
   const resetChanges = () => {
     setUserInputs(originalDataRef.current);
-    setErrorMessage("");
   }
 
   return (
@@ -134,7 +138,6 @@ export default function EditUserDialog({
               required={true}
             />
           </section>
-          {errorMessage && <span className="error-message">Error: {errorMessage}</span>}
         </div>
         <div className="dialog-buttons">
           <button className="dialog-button cancel-button" onClick={onClose}>Cancel</button>

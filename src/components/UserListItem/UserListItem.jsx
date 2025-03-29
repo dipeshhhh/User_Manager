@@ -6,6 +6,7 @@ import FallbackAvatar from "../../assets/account_circle.svg"
 import ConfirmationDialog from "../Dialogs/ConfirmationDialog/ConfirmationDialog";
 import EditUserDialog from "../Dialogs/EditUserDialog/EditUserDialog";
 import { useUserListContext } from "../../contexts/UserListContext";
+import { toast } from "react-toastify";
 
 export default function UserListItem({ id, first_name, last_name, email, avatar }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,9 +29,10 @@ export default function UserListItem({ id, first_name, last_name, email, avatar 
       const response = await axios.delete(`${BASE_URL}/users/${id}`);
       if (response.status < 200 || response.status > 299) throw new Error("deletion failed");
       deleteUser(id);
+      toast.success("User deleted successfully");
       confirmationDialogRef.current.close();
     } catch (error) {
-      console.log(error)
+      toast.error(`Error: ${error}`)
     } finally {
       setIsLoading(false);
       confirmationDialogRef.current?.close();

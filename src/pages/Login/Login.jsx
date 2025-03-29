@@ -10,6 +10,7 @@ import VisibilityOff from "../../assets/visibility_off.svg";
 import { validateEmail } from "../../utils/helpers";
 import FormTextInput from "../../components/FormInputs/FormTextInput/FormTextInput";
 import FormCheckboxInput from "../../components/FormInputs/FormCheckboxInput/FormCheckboxInput";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const [inputCredentials, setInputCredentials] = useState({
@@ -18,7 +19,6 @@ export default function Login() {
     "rememberMe": false
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
@@ -30,22 +30,20 @@ export default function Login() {
   // ========== Input Validation ==========
   const validateInputs = () => {
     if (!inputCredentials.email && !inputCredentials.password) {
-      setErrorMessage("Missing email and Password");
+      toast.error('Error: missing email and password input');
       return false;
     }
     if (!inputCredentials.email) {
-      setErrorMessage("Missing email");
+      toast.error('Error: missing email input');
       return false;
     } else if (!validateEmail(inputCredentials.email)) {
-      setErrorMessage("Invalid email");
+      toast.error('Error: invalid email');
       return false;
     }
     if (!inputCredentials.password) {
-      setErrorMessage("Missing Password");
+      toast.error('Error: missing password input');
       return false;
     }
-
-    setErrorMessage('');
     return true;
   }
 
@@ -76,12 +74,10 @@ export default function Login() {
       );
 
       saveToken(response.data.token, inputCredentials.rememberMe);
-      // Show toast
+      toast.success("Logged in successfully")
       navigate("/");
     } catch (error) {
-      console.error(error.response.data.error);
-      // show toast instead
-      setErrorMessage(error.response.data.error);
+      toast.error(`Error: ${error.response.data.error}`);
     } finally {
       setIsLoading(false);
     }
@@ -89,6 +85,19 @@ export default function Login() {
 
   return (
     <div className="page-body login-page">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        // transition={Bounce}
+      />
       <h4>Log In</h4>
       <form className="login-form" onSubmit={handleSubmit}>
         <FormTextInput
@@ -114,9 +123,6 @@ export default function Login() {
             onClick={toggleShowPassword}
           />
         </FormTextInput>
-        {errorMessage && // Will use toast later, this will do for now
-          <span className="error-message">Error: {errorMessage}</span>
-        }
         <div className="form-input-container">
           <FormCheckboxInput
             id="input-stay-logged-in"
