@@ -5,12 +5,10 @@
 .user-list-item {
   display: flex;
   flex-direction: row;
-  /* gap: 1ch; */
+  align-items: center;
   border-radius: var(--container-radius);
   overflow: hidden;
   width: 100%;
-  align-items: center;
-  /* border: 1px solid var(--background-50); */
   background-color: var(--primary-10);
 }
 
@@ -22,9 +20,9 @@
 }
 
 .user-list-item-right {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   min-height: var(--user-list-item-image-height);
 }
 
@@ -41,16 +39,16 @@
 }
 
 .user-list-item-button-section button {
-  border: none;
-  padding: 1ch;
-  cursor: pointer;
-  transition: var(--hover-transition);
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 0.5ch;
+  
+  border: none;
+  padding: 1ch;
+  cursor: pointer;
+  transition: var(--hover-transition);
 }
 
 .user-list-item-button-section button img {

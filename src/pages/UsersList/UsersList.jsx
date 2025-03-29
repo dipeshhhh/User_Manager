@@ -1,12 +1,14 @@
 import { useEffect, useState, useRef } from "react";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import { useUserListContext } from "../../contexts/UserListContext.jsx";
+
 import "./UsersList.css"
+
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import SearchBar from "../../components/Searchbar/Searchbar.jsx";
 import UserListItem from "../../components/UserListItem/UserListItem.jsx";
 import PaginationBar from "../../components/PaginationBar/PaginationBar.jsx";
-import axios from "axios";
-import { useUserListContext } from "../../contexts/UserListContext.jsx";
-import { toast, ToastContainer } from "react-toastify";
 
 export default function UsersList() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -24,8 +26,7 @@ export default function UsersList() {
         setUserList(response.data.data);
         setTotalPages(response.data.total_pages);
       } catch (errors) {
-        // handle errors
-        toast.error(`Error: ${errors}`)
+        toast.error(`Error: ${errors.response.data.error}`)
       } finally {
         setIsLoading(false);
       }
@@ -46,16 +47,10 @@ export default function UsersList() {
         draggable
         pauseOnHover
         theme="colored"
-      // transition={Bounce}
       />
       <NavBar />
       <main className="page-main user-list-page-main">
         <SearchBar />
-        {/* <PaginationBar
-          pageNumber={pageNumber}
-          setPageNumber={setPageNumber}
-          totalPages={totalPages}
-        /> */}
         {isLoading ?
           "Loading..."
           :

@@ -3,22 +3,22 @@
 }
 
 .user-list-page-main {
-  padding: var(--container-padding);
-  width: 50vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--container-padding);
+  padding: var(--container-padding);
+  width: 50vw;
 }
 
 .users-list {
-  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: var(--container-padding);
+  flex-flow: wrap;
   align-items: center;
   justify-content: center;
-  flex-flow: wrap;
+  gap: var(--container-padding);
+  width: 100%;
 }
 
 @media only screen and (max-width: 720px) {

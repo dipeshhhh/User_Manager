@@ -6,7 +6,6 @@ import './colors.css'
 import ProtectedRoutes from './utils/ProtectedRoutes.jsx'
 import PublicRoutes from './utils/PublicRoutes.jsx'
 
-import App from './App.jsx'
 import Login from './pages/Login/Login.jsx'
 import UsersList from './pages/UsersList/UsersList.jsx'
 import { UserListProvider } from './contexts/UserListContext.jsx'

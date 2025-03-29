@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { removeToken } from "../../utils/auth";
 import "./Navbar.css";
 
-import FavIcon from "../../assets/shield_person.svg";
+// import FavIcon from "../../assets/shield_person.svg";
 import Avatar from "../../assets/account_circle.svg";
 import Logout from "../../assets/logout.svg";
 
@@ -13,12 +13,13 @@ export default function Navbar() {
   const avatarIconRef = useRef(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
+  useEffect(() => { // To close user menu when clicked outside of it.
     const handleClickOutside = (event) => {
       if ((userMenuRef.current && avatarIconRef.current) &&
         (
           !userMenuRef.current.contains(event.target) &&
           avatarIconRef.current.toString() !== event.target.toString()
+          // Prevent reopening of user menu when closing by clicking on avatar icon
         )
       ) { setIsUserMenuOpen(false); }
     };
@@ -30,7 +31,7 @@ export default function Navbar() {
 
   const toggleUserMenu = () => { setIsUserMenuOpen(!isUserMenuOpen) };
 
-  const handleAvatarClick = (event) => {
+  const handleAvatarClick = () => {
     toggleUserMenu();
   }
 

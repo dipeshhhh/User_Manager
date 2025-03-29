@@ -11,16 +11,16 @@
 }
 
 .login-form {
-  background: var(--primary-10);
-  padding: var(--container-padding);
-  border: 1px solid var(--background-100);
-  border-radius: var(--container-radius);
-  display: flex;
   align-self: center;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 2ch;
+  background: var(--primary-10);
+  padding: var(--container-padding);
+  border: 1px solid var(--background-100);
+  border-radius: var(--container-radius);
 }
 
 .login-form label {

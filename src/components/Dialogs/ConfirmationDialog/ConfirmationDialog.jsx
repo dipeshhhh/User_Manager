@@ -14,7 +14,7 @@ export default function ConfirmationDialog({
   const formRef = useRef(null);
 
   useEffect(() => {
-    function handleClickOutside(e) {
+    function handleClickOutside(e) { // Close dialog on clicking outside
       if ((referrer.current && formRef.current) && !formRef.current.contains(e.target)) {
         referrer.current.close();
       }

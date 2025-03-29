@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
-import "./Searchbar.css";
-import SearchIcon from "../../assets/search.svg";
 import { useUserListContext } from "../../contexts/UserListContext";
 import { capitalizeFirstLetter, debounce } from "../../utils/helpers";
+import "./Searchbar.css";
 import FormCheckboxInput from "../FormInputs/FormCheckboxInput/FormCheckboxInput";
+import SearchIcon from "../../assets/search.svg";
 
 export default function SearchBar() {
   const [searchInput, setSearchInput] = useState("");

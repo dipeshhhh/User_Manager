@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import axios from "axios";
-import "./UserListItem.css";
 import { useUserListContext } from "../../contexts/UserListContext";
 import { toast } from "react-toastify";
+
+import "./UserListItem.css";
 
 import ConfirmationDialog from "../Dialogs/ConfirmationDialog/ConfirmationDialog";
 import EditUserDialog from "../Dialogs/EditUserDialog/EditUserDialog";

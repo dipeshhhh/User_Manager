@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { capitalizeFirstLetter, isShallowCopy, validateEmail, validateName } from "../../../utils/helpers";
+import { useUserListContext } from "../../../contexts/UserListContext";
+
 import "./EditUserDialog.css";
 import "../Dialog.css";
-import { capitalizeFirstLetter, isShallowCopy, validateEmail, validateName } from "../../../utils/helpers";
+
+import FormTextInput from "../../FormInputs/FormTextInput/FormTextInput";
 
 import FallBackAvatar from "../../../assets/account_circle.svg";
-import FormTextInput from "../../FormInputs/FormTextInput/FormTextInput";
-import axios from "axios";
-import { useUserListContext } from "../../../contexts/UserListContext";
-import { toast } from "react-toastify";
 
 export default function EditUserDialog({
   referrer,
@@ -25,7 +27,7 @@ export default function EditUserDialog({
 
   const { updateUser } = useUserListContext();
 
-  useEffect(() => {
+  useEffect(() => { // Close dialog on clicking outside
     function handleClickOutside(e) {
       if ((referrer.current && formRef.current) && !formRef.current.contains(e.target)) {
         resetChanges();

@@ -2,15 +2,16 @@ import axios from "axios";
 import { useState } from "react"
 import { useNavigate } from "react-router";
 import { saveToken } from "../../utils/auth";
+import { validateEmail } from "../../utils/helpers";
+import { toast, ToastContainer } from "react-toastify";
+
 import "./Login.css";
 import "../pages.css";
 
 import Visibility from "../../assets/visibility.svg";
 import VisibilityOff from "../../assets/visibility_off.svg";
-import { validateEmail } from "../../utils/helpers";
 import FormTextInput from "../../components/FormInputs/FormTextInput/FormTextInput";
 import FormCheckboxInput from "../../components/FormInputs/FormCheckboxInput/FormCheckboxInput";
-import { toast, ToastContainer } from "react-toastify";
 
 export default function Login() {
   const [inputCredentials, setInputCredentials] = useState({
@@ -96,7 +97,6 @@ export default function Login() {
         draggable
         pauseOnHover
         theme="colored"
-        // transition={Bounce}
       />
       <h4>Log In</h4>
       <form className="login-form" onSubmit={handleSubmit}>

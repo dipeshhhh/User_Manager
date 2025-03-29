@@ -1,16 +1,10 @@
 .pagination-bar-container {
-  width: 100%;
-  /* border-radius: var(--container-radius); */
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
+  width: 100%;
   font-size: small;
-
-  /* border: 1px solid var(--background-50);
-  border-right: none;
-  border-left: none; */
 }
 
 .pagination-bar-container > * {
@@ -22,17 +16,15 @@
 }
 
 .pagination-button {
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  color: var(--text);
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 0.5ch;
-
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: var(--text);
   font-size: small;
 }
 
