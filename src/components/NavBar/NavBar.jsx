@@ -1,13 +1,13 @@
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { removeToken } from "../../utils/auth";
-import "./Navbar.css";
+import "./NavBar.css";
 
 // import FavIcon from "../../assets/shield_person.svg";
 import Avatar from "../../assets/account_circle.svg";
 import Logout from "../../assets/logout.svg";
 
-export default function Navbar() {
+export default function NavBar() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
   const avatarIconRef = useRef(null);
